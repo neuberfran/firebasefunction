@@ -1,0 +1,7 @@
+firebase --project casaminha-2e0ca functions:config:set cloudiot.region=us-central1  cloudiot.registry=example-registry
+
+firebase --project casaminha-2e0ca functions:config:set smarthome.id=567617726062-9r9upj4tip1nfdupm3iin2ld6t7coa0t.apps.googleusercontent.com smarthome.secret=DB3VtbpquifIVOeCS_4qVQAA
+
+firebase --project casaminha-2e0ca functions:config:set smarthome.key="rebuen1972"   
+
+firebase deploy --only functions  
