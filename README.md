@@ -120,3 +120,4 @@ which will report connection state changes.
 1. Create a new Cloud Pub/Sub topic called `online-state` as the
    **Sink Destination**
 # firebasefunction
+# firebasefunction

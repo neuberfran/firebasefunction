@@ -1,5 +1,0 @@
-{
-    "serial_number":"rpi3",
-    "type":"light",
-    "public_key":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEc62bAEwAI3zFDEAz6dpLCr1m4eBP8OF3ERTg55C+gk7GvWflAhW41ZR9Mj6RLxZ1y7bPFS214plBQJuLzO0fyA=="
-}

@@ -1,3 +1,0 @@
-firebase deploy  --project casaminha-2e0ca
-
-npm install --save firebase @angular/fire -f
