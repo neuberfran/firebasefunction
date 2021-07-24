@@ -91,15 +91,23 @@ fulfillment.onExecute(async (body, headers) => {
         const batch = firestore.batch()
 
         for (const target of command.devices) {
-            const configRef = firestore.doc(`device-configs/${target.id}`)
+            const configRef = firestore.doc(`device-configs/garagem2`)
+            const configRef5 = firestore.doc(`device-configs/cerca2`)
             const targetDoc = await configRef.get()
-            const { alarmstate } = targetDoc.data()
+            const targetDoc5 = await configRef5.get()
+            const { cercastate } = targetDoc5.data()
             const { garagestate } = targetDoc.data()
+     //       const configRef2 = firestore.doc(`device-configs/${target.id}`)
+            const configRef7 = firestore.doc(`device-configs/${target.id}`)
+       //     const targetDoc2 = await configRef2.get()
+            const targetDoc7 = await configRef7.get()
+            const { gpiogaragestate } = targetDoc7.data()
+            const { gpiocercastate } = targetDoc7.data()
             let params = reqCommand.execution[0].params
             let command = reqCommand.execution[0].command
             console.log('COMMAND.EXECUTION', command)
             console.log(
-                'reqCommand.execution - Alarme',
+                'reqCommand.execution - cerca2',
                 reqCommand.execution[0].params.on
             )
             console.log(
@@ -108,11 +116,15 @@ fulfillment.onExecute(async (body, headers) => {
             )
             console.log('Params variavel=', params)
 
-            // Alarme abaixo
+           console.log('gpiocercastate - 927 = ', gpiocercastate)
+
+           console.log('gpiogaragestate - 927 = ', gpiogaragestate)
+
+       //   Cerca abaixo
             if (
-                alarmstate === true &&
+                cercastate === false &&
                 command === 'action.devices.commands.OnOff' &&
-                reqCommand.execution[0].params.on === true
+                reqCommand.execution[0].params.on === false
             ) {
                 return {
                     requestId,
@@ -122,9 +134,9 @@ fulfillment.onExecute(async (body, headers) => {
                     },
                 }
             } else if (
-                alarmstate === false &&
+                cercastate === true &&
                 command === 'action.devices.commands.OnOff' &&
-                reqCommand.execution[0].params.on === false
+                reqCommand.execution[0].params.on === true
             ) {
                 return {
                     requestId,
@@ -140,6 +152,7 @@ fulfillment.onExecute(async (body, headers) => {
                 garagestate === true &&
                 command === 'action.devices.commands.OpenClose' &&
                 reqCommand.execution[0].params.openPercent === 0
+
             ) {
                 return {
                     requestId,
@@ -161,7 +174,25 @@ fulfillment.onExecute(async (body, headers) => {
                     },
                 }
             }
-            batch.update(configRef, update)
+
+            if(
+
+                cercastate === true &&
+                command === 'action.devices.commands.OpenClose' &&
+                reqCommand.execution[0].params.openPercent === 100)
+
+             { await firestore.doc(`device-configs/cerca`).update({ 'gpiocercastate':true, 'value.on':true })}
+
+         
+           await firestore.doc(`device-configs/${target.id}`).update({ 'gpiogaragestate':true })
+
+           await firestore.doc(`device-configs/${target.id}`).update({ 'gpiocercastate':true })
+
+           // /${target.id}
+
+
+           batch.update(configRef7, update)
+           
         }
 
         await batch.commit()

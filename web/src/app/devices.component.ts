@@ -8,7 +8,7 @@ import { MatSnackBar } from "@angular/material";
 
 export interface Device {id: string; name: string; owner: string; type: string; online: boolean; icon: string; status: string; state: any}
 enum DeviceType {
-  Alarm = 'alarm',
+  cerca = 'cerca',
   Garage = 'garage'
 }
 
@@ -58,7 +58,7 @@ export class DevicesComponent implements OnInit {
    */
   deviceIcon(device: Device) {
     switch (device.type) {
-      case DeviceType.Alarm: return 'lightbulb_outline';
+      case DeviceType.cerca: return 'lightbulb_outline';
       case DeviceType.Garage: return 'ac_unit';
       default: return 'developer_board';
     }
@@ -73,7 +73,7 @@ export class DevicesComponent implements OnInit {
     }
 
     switch (device.type) {
-      case DeviceType.Alarm:
+      case DeviceType.cerca:
         return device.state.on ? `Brightness: ${device.state.brightness}` : 'OFF';
       case DeviceType.Garage:
         return (device.state.mode !== 'off') ? `Mode: ${device.state.mode}, Setpoint: ${device.state.setpoint}` : 'OFF';

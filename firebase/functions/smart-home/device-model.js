@@ -15,13 +15,12 @@ class Device {
         // Verify device type
         switch (data.type) {
             case 'light':
-                return new AlarmeStateDevice(id, data)
+                return new CercaStateDevice(id, data);
             case 'garage':
-                return new GaragemDevice(id, data)
+                return new GaragemDevice(id, data);
             default:
                 throw new Error(
-                    `Invalid device type found in ${id}: ${data.type}`
-                )
+                    `Invalid device type found in ${id}: ${data.type}`);
         }
     }
 
@@ -29,47 +28,47 @@ class Device {
      * Construct device state payload from the given Assistant commands
      */
     static stateFromExecution(execution) {
-        const state = {}
+        const state = {};
         execution.forEach((item) => {
             switch (item.command) {
                 case 'action.devices.commands.OnOff':
-                    state['value.on'] = item.params.on
-                    break
+                    state['value.on'] = item.params.on;
+                    break;
                 case 'action.devices.commands.OpenClose':
-                    state['value.openPercent'] = item.params.openPercent
-                    break
+                    state['value.openPercent'] = item.params.openPercent;
+                    break;
                 default:
-                    throw new Error(`Invalid command received: ${item.command}`)
+                    throw new Error(`Invalid command received: ${item.command}`);
             }
-        })
+        });
 
-        return state
+        return state;
     }
-}
+};
 
 /**
- * Traits for a Alarm device
+ * Traits for a cerca device
  */
-class AlarmeStateDevice extends Device {
+class CercaStateDevice extends Device {
     get metadata() {
         return {
             id: this.id,
             type: 'action.devices.types.LIGHT',
             traits: [
-                'action.devices.traits.OnOff',
+                'action.devices.traits.OnOff'
                 //        'action.devices.traits.Brightness'
             ],
             name: {
-                name: this.name,
+                name: this.name
             },
-            willReportState: true,
+            willReportState: true
         }
     }
 
     get reportState() {
         return {
             online: this.online,
-            on: this.state.on,
+            on: this.state.on
             //    brightness: this.state.brightness
         }
     }
@@ -85,18 +84,18 @@ class GaragemDevice extends Device {
             type: 'action.devices.types.GARAGE',
             traits: ['action.devices.traits.OpenClose'],
             name: {
-                name: this.name,
+                name: this.name
             },
-            willReportState: true,
+            willReportState: true
         }
     }
 
     get reportState() {
         return {
             online: this.online,
-            openPercent: this.state.openPercent,
-        }
+            openPercent: this.state.openPercent
+        };
     }
-}
+};
 
-module.exports = Device
+module.exports = Device;
