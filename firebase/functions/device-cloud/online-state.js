@@ -1,4 +1,3 @@
-
 const functions = require('firebase-functions');
 const { firestore } = require('../admin');
 
