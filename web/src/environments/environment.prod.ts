@@ -8,7 +8,7 @@ export const environment = {
     databaseURL: "https://casaminha-2e0ca.firebaseio.com",
     projectId: "casaminha-2e0ca",
     storageBucket: "casaminha-2e0ca.appspot.com",
-    messagingSenderId: "567617726062"
+    messagingSenderId: "9999999999999999"
   },
   clientId: "999999999999999999999999999999996t7coa0t.apps.googleusercontent.com"
 };
